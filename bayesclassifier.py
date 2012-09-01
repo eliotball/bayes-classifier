@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 """
 Provides a class implementing naive Bayesian classification of text content.
 
@@ -12,7 +10,7 @@ class Classifier:
     Object for performing naive bayesian classification.
     """
     def __init__(self, outcomes):
-        "Takes a list of outcomes as strings."
+        "Takes a list of outcomes as strings, constructs classifier."
         # Prepare outcome object list
         self.outcomes = { }
         for outcome in outcomes:
@@ -39,7 +37,7 @@ class Classifier:
             sum([self.outcomes[other_outcome].probability_token_given_outcome(token) *
                  self.probability_outcome(other_outcome)
                  for other_outcome in self.outcomes.keys()]))
-        if token_probability <= 0.00001:
+        if token_probability <= 0.0000001:
             return 0.0
         # Bayes formula
         return (
@@ -58,16 +56,22 @@ class Classifier:
             all_true *= probability
             none_true *= 1.0 - probability
         # Watch out for the classifier failing due to extreme values
-        if all_true + none_true <= 0.00001:
-            raise Exception("Extreme probabilities - consider using more training data.")
+        if all_true + none_true <= 0.0000001:
+            raise Exception("Divide by zero - consider using more training data.")
         return all_true / (all_true + none_true)
 
     def classify_tokens(self, tokens):
-        "Finds the most likely outcome for a set of tokens."
+        "Finds the probability of each outcome given a set of tokens."
         outcome_probabilities = dict(
             [(outcome, self.probability_outcome_given_tokens(tokens, outcome))
              for outcome in self.outcomes.keys()])
         return outcome_probabilities
+
+    def most_likely_outcome(self, tokens):
+        "Find the most likely outcome given a set of tokens."
+        return max(self.outcomes.keys(), 
+            key=lambda outcome: self.probability_outcome_given_tokens(tokens, outcome))
+
 
 class Outcome:
     """
