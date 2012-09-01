@@ -4,7 +4,7 @@ bayes-classifier
 Introduction
 ------------
 
-Naive Bayesian classification is a method for determining which set of inputs a particular input is closest to, given a number of sets of 'training' input. For example, a common use of naive Bayes classifiers is in spam filtering, where there is a large set of 'ham messages' (wanted mail), and a large set of 'spam messages' (unwanted mail) and the classifier decides to whether an incoming message is ham or spam.
+Naive Bayesian classification is a method for determining which set of outputs a particular input should give, based on it's similarity to inputs that have already been assigned outputs, for example by a human. One common use of naive Bayes classifiers is in spam filtering, where there is a large set of 'ham messages' (wanted mail), and a large set of 'spam messages' (unwanted mail) and the classifier decides to whether an incoming message is ham or spam.
 
 bayesclassifier.py is a Python implementation of a naive Bayes classifier.
 
